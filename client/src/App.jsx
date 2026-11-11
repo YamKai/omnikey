@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import RecordForm from './components/RecordForm';
+import { API_URL } from './config';
 
 export default function App() {
   const [currentView, setCurrentView] = useState('login');
@@ -72,7 +73,7 @@ export default function App() {
 
   const fetchRecords = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/records');
+      const res = await fetch('/records');
       const data = await res.json();
       setRecords(data);
     } catch (err) {
@@ -84,7 +85,7 @@ export default function App() {
     e.preventDefault();
     setLoginError('');
     try {
-      const res = await fetch('http://localhost:3000/api/login', {
+      const res = await fetch(`${API_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -112,7 +113,7 @@ export default function App() {
         last_modifiedby: loggedInUser ? loggedInUser.user_name : 'Admin'
       };
 
-      const res = await fetch('http://localhost:3000/api/records', {
+      const res = await fetch(`${API_URL}/records`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -146,7 +147,7 @@ export default function App() {
         last_modifiedby: loggedInUser ? loggedInUser.user_name : 'Admin'
       };
 
-      const res = await fetch(`http://localhost:3000/api/records/${editFormData.id}`, {
+      const res = await fetch(`${API_URL}/records/${editFormData.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -166,7 +167,7 @@ export default function App() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this record?')) return;
     try {
-      const res = await fetch(`http://localhost:3000/api/records/${id}`, {
+      const res = await fetch(`${API_URL}/records/${id}`, {
         method: 'DELETE'
       });
       if (res.ok) {
