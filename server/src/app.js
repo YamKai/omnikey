@@ -43,7 +43,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'https://omnikey.online',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type']
 }));
@@ -287,5 +287,5 @@ app.delete('/api/users/:id', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server listening on http://localhost:${PORT}`);
+  console.log(`Server listening`);
 });
