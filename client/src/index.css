@@ -1,0 +1,921 @@
+
+/* ==========================================
+   1. DESIGN SYSTEM
+   ========================================== */
+
+:root {
+  color-scheme: dark;
+
+  /* Brand */
+  --primary: #A78BFA;
+  --primary-hover: #B99DFB;
+  --primary-light: rgba(167, 139, 250, 0.13);
+  --primary-border: rgba(167, 139, 250, 0.28);
+
+  --accent: #D9A0C4;
+  --accent-light: rgba(217, 160, 196, 0.12);
+
+  /* Backgrounds */
+  --bg-main: #0D0A12;
+  --bg-card: #17111F;
+  --bg-input: #100C17;
+  --bg-elevated: #211829;
+  --bg-hover: #2A2033;
+
+  /* Borders */
+  --border-color: #30243A;
+  --border-subtle: rgba(217, 160, 196, 0.10);
+
+  /* Typography */
+  --text-main: #F7F1FA;
+  --text-muted: #B6A9BD;
+  --text-soft: #887B91;
+
+  /* Status */
+  --success-bg: rgba(52, 170, 120, 0.13);
+  --success-text: #72D6A5;
+
+  --pending-bg: rgba(226, 174, 91, 0.13);
+  --pending-text: #EBC47D;
+
+  --danger-bg: rgba(239, 105, 126, 0.13);
+  --danger-text: #F18B9B;
+
+  /* Effects */
+  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.20);
+  --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.28);
+  --shadow-glow: 0 0 24px rgba(167, 139, 250, 0.10);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+}
+
+/* ==========================================
+   2. GLOBAL RESET
+   ========================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  background:
+    radial-gradient(
+      ellipse at 15% 0%,
+      rgba(125, 75, 135, 0.10),
+      transparent 38%
+    ),
+    radial-gradient(
+      ellipse at 90% 35%,
+      rgba(105, 75, 145, 0.07),
+      transparent 35%
+    ),
+    var(--bg-main);
+
+  color: var(--text-main);
+  line-height: 1.55;
+  min-height: 100vh;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dashboard-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 24px 48px;
+}
+
+/* ==========================================
+   3. NAVIGATION
+   ========================================== */
+
+.top-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(23, 17, 31, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  padding: 15px 32px;
+  border-bottom: 1px solid var(--border-subtle);
+
+  box-shadow: 0 5px 24px rgba(0, 0, 0, 0.22);
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  margin-bottom: 28px;
+}
+
+.nav-logo {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 9px rgba(217, 160, 196, 0.16));
+}
+
+.logoh {
+  height: 55px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 9px rgba(217, 160, 196, 0.16));
+}
+
+.nav-user-menu-container {
+  position: relative;
+}
+
+.user-menu-toggle {
+  background: transparent;
+  border: 1px solid transparent;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 9px 14px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.user-menu-toggle:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-color);
+}
+
+.dropdown-arrow {
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+.user-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+
+  box-shadow: var(--shadow-md);
+  width: 180px;
+  overflow: hidden;
+  z-index: 101;
+}
+
+.dropdown-signout-btn {
+  width: 100%;
+  padding: 13px 16px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--danger-text);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.dropdown-signout-btn:hover {
+  background: var(--danger-bg);
+}
+
+/* ==========================================
+   4. NOTIFICATIONS
+   ========================================== */
+
+.notification-banner {
+  padding: 14px 20px;
+  margin-bottom: 22px;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  animation: fadeIn 0.3s ease-in-out;
+  border: 1px solid transparent;
+}
+
+.notification-banner.success {
+  background: linear-gradient(
+    110deg,
+    rgba(167, 139, 250, 0.14),
+    rgba(217, 160, 196, 0.09)
+  );
+  color: #DCCBFC;
+  border-color: var(--primary-border);
+}
+
+.notification-banner.error {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border-color: rgba(241, 139, 155, 0.25);
+}
+
+/* ==========================================
+   5. LOGIN & FORMS
+   ========================================== */
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 85vh;
+  padding: 24px;
+}
+
+.login-card,
+.form-container {
+  position: relative;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(167, 139, 250, 0.045),
+      transparent 45%
+    ),
+    var(--bg-card);
+
+  padding: 42px;
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-md);
+  width: 100%;
+  max-width: 450px;
+
+  border: 1px solid var(--border-color);
+}
+
+.login-card::before,
+.form-container::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent),
+    var(--primary),
+    transparent
+  );
+  opacity: 0.55;
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+.portal-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+  color: var(--text-main);
+  margin-bottom: 7px;
+}
+
+.portal-subtitle {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  margin-bottom: 28px;
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 12px 15px;
+
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+
+  font-size: 0.95rem;
+  color: var(--text-main);
+  background: var(--bg-input);
+
+  transition: all 0.2s ease;
+}
+
+input::placeholder {
+  color: var(--text-soft);
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* ==========================================
+   6. BUTTONS
+   ========================================== */
+
+.btn {
+  padding: 11px 19px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.22s ease;
+}
+.details-btn {
+  background: transparent;
+  color: #ffffff;
+  border-color: var(--primary-border);
+}
+
+
+.primary-btn {
+  background: linear-gradient(
+    110deg,
+    #A78BFA,
+    #BB91D9,
+    #D9A0C4
+  );
+  color: #1A1020;
+  width: 100%;
+  box-shadow: 0 5px 18px rgba(167, 139, 250, 0.17);
+}
+
+.details-btn:hover {
+  background: var(--accent);
+  filter: brightness(1.09);
+  transform: translateY(-1px);
+  box-shadow: 0 7px 22px rgba(167, 139, 250, 0.24);
+}
+
+.primary-btn:hover {
+  filter: brightness(1.09);
+  transform: translateY(-1px);
+  box-shadow: 0 7px 22px rgba(167, 139, 250, 0.24);
+}
+
+.secondary-btn {
+  background: var(--bg-elevated);
+  color: var(--text-main);
+  border-color: var(--border-color);
+}
+
+.secondary-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--primary-border);
+}
+
+.delete-btn {
+  background: rgba(239, 105, 126, 0.16);
+  color: var(--danger-text);
+  border: 1px solid rgba(239, 105, 126, 0.24);
+}
+
+.delete-btn:hover {
+  background: rgba(239, 105, 126, 0.25);
+}
+
+.edit-btn {
+  background: rgba(167, 139, 250, 0.15);
+  color: #C9B5FF;
+  border: 1px solid var(--primary-border);
+}
+
+.edit-btn:hover {
+  background: rgba(167, 139, 250, 0.24);
+}
+
+/* ==========================================
+   7. DASHBOARD HEADER & CONTROLS
+   ========================================== */
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background:
+    linear-gradient(
+      115deg,
+      rgba(167, 139, 250, 0.07),
+      rgba(217, 160, 196, 0.035),
+      transparent 70%
+    ),
+    var(--bg-card);
+
+  padding: 28px;
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
+
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-header::after {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  right: -100px;
+  top: -130px;
+  background: rgba(217, 160, 196, 0.08);
+  filter: blur(35px);
+  pointer-events: none;
+}
+
+.dashboard-header h1 {
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text-main);
+}
+
+.dashboard-header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+
+.controls-section {
+  background: var(--bg-card);
+  padding: 22px;
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
+
+  border: 1px solid var(--border-color);
+
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ==========================================
+   8. TABLES
+   ========================================== */
+
+.table-wrapper {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.records-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.records-table th {
+  background: #211829;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.65px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.records-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-size: 0.93rem;
+}
+
+.records-table tbody tr {
+  transition: background 0.18s ease;
+}
+
+.records-table tbody tr:hover {
+  background: rgba(167, 139, 250, 0.045);
+}
+
+.records-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 44px !important;
+}
+
+/* ==========================================
+   9. MODALS
+   ========================================== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 5, 12, 0.82);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  width: 100%;
+  max-width: 550px;
+  border-radius: var(--radius-lg);
+
+  box-shadow: 0 24px 65px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 26px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h2 {
+  font-size: 1.25rem;
+  color: var(--text-main);
+}
+
+.close-modal-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+
+.close-modal-btn:hover {
+  color: var(--accent);
+}
+
+.modal-body {
+  padding: 26px;
+}
+
+.modal-body p {
+  margin-bottom: 12px;
+  color: var(--text-muted);
+}
+
+.modal-footer {
+  padding: 18px 26px;
+  background: var(--bg-input);
+  border-top: 1px solid var(--border-color);
+
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ==========================================
+   10. STATUS BADGES & HIGHLIGHTS
+   ========================================== */
+
+.status-tag {
+  display: inline-block;
+  padding: 5px 11px;
+  border-radius: 20px;
+  font-size: 0.79rem;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+}
+
+.status-tag.approved {
+  background: var(--success-bg);
+  color: var(--success-text);
+  border: 1px solid rgba(114, 214, 165, 0.18);
+}
+
+.status-tag.pending-review {
+  background: var(--pending-bg);
+  color: var(--pending-text);
+  border: 1px solid rgba(235, 196, 125, 0.18);
+}
+
+.status-tag.grade-appeal {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border: 1px solid rgba(241, 139, 155, 0.18);
+}
+
+.score-badge {
+  font-weight: 700;
+  color: #D9BFFF;
+}
+
+.review-reason-box {
+  background: linear-gradient(
+    110deg,
+    rgba(167, 139, 250, 0.10),
+    rgba(217, 160, 196, 0.045)
+  );
+
+  border-left: 3px solid var(--primary);
+  padding: 13px 16px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-top: 16px;
+  color: #E9DDF2;
+}
+
+.audit-trail {
+  margin-top: 22px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 13px;
+}
+
+/* ==========================================
+   11. INTERACTION & ACCESSIBILITY
+   ========================================== */
+
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================
+   12. RESPONSIVE
+   ========================================== */
+
+@media (max-width: 768px) {
+  .top-navbar {
+    padding: 13px 18px;
+  }
+
+  .app-container {
+    padding: 0 16px 32px;
+  }
+
+  .dashboard-header {
+    padding: 21px;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .login-card,
+  .form-container {
+    padding: 27px 22px;
+  }
+
+  .controls-section {
+    padding: 17px;
+    gap: 14px;
+  }
+
+  .records-table th,
+  .records-table td {
+    padding: 12px 13px;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* ==========================================
+   13. SMOOTH ENTRANCE & EXIT ANIMATIONS
+   ========================================== */
+
+/* Modal entrance */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-overlay {
+  animation: overlayFadeIn 0.22s ease both;
+}
+
+.modal-content {
+  animation: modalFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Dropdown entrance */
+@keyframes dropdownEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-7px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.user-dropdown-menu {
+  transform-origin: top right;
+  animation: dropdownEnter 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Notification entrance */
+@keyframes notificationEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.notification-banner {
+  animation: notificationEnter 0.3s ease both;
+}
+
+/* Notification exit
+   Apply this class before removing the notification
+   from the DOM. */
+@keyframes notificationExit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 100px;
+    margin-bottom: 22px;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-width: 0;
+  }
+}
+
+.notification-banner.leaving {
+  overflow: hidden;
+  animation: notificationExit 0.25s ease forwards;
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay,
+  .modal-content,
+  .user-dropdown-menu,
+  .notification-banner {
+    animation: none !important;
+  }
+}
+
+
+/* ==========================================
+   ASSESSMENT GRADE PROGRESS BAR
+   ========================================== */
+
+.assessment-grade {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 145px;
+  max-width: 190px;
+}
+
+.assessment-grade-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.assessment-percentage {
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.grade-progress-track {
+  height: 5px;
+  width: 100%;
+  background: var(--bg-elevated);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(217, 160, 196, 0.08);
+}
+
+.grade-progress-fill {
+  height: 100%;
+  border-radius: 20px;
+
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--accent)
+  );
+
+  box-shadow: 0 0 8px rgba(167, 139, 250, 0.25);
+
+  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
