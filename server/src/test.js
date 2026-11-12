@@ -1,7 +1,10 @@
-const express = require('express');
+// test.js
+import express from 'express';
+
 const app = express();
 
 app.get('/', (req, res) => {
+  res.expressSend = 'Express is working';
   res.send('Express is working');
 });
 
