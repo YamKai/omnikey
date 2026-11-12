@@ -1,13 +1,11 @@
-// test.js
-import express from 'express';
+// src/test.js
+import Database from 'better-sqlite3';
 
-const app = express();
-
-app.get('/', (req, res) => {
-  res.expressSend = 'Express is working';
-  res.send('Express is working');
-});
-
-app.listen(3000, () => {
-  console.log('Minimal Express server running on port 3000');
-});
+try {
+  console.log('Attempting to initialize better-sqlite3...');
+  // Opens an in-memory database just to test native binding stability
+  const db = new Database(':memory:');
+  console.log('better-sqlite3 initialized successfully!');
+} catch (err) {
+  console.error('Database test failed:', err);
+}
