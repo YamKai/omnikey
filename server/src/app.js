@@ -45,8 +45,19 @@ seedStmt.run('Ahmed Salaheldin', 'ahmed@university.edu', '99775533');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use((req, res, next) => {
+  console.log(`[Incoming Request] ${req.method} ${req.url}`);
+  next();
+});
+
+const allowedOrigins = [
+  'https://omnikey.online',
+  'https://www.omnikey.online',
+  'http://localhost:5173',
+];
+
 app.use(cors({
-  origin: 'https://omnikey.online',
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type']
 }));
