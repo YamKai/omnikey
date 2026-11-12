@@ -73,7 +73,7 @@ export default function App() {
 
   const fetchRecords = async () => {
     try {
-      const res = await fetch('/records');
+      const res = await fetch('`${API_URL}/records');
       const data = await res.json();
       setRecords(data);
     } catch (err) {
