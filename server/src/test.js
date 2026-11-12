@@ -1,2 +1,10 @@
-// test.js
-console.log("Node is running!");
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Express is working');
+});
+
+app.listen(3000, () => {
+  console.log('Minimal Express server running on port 3000');
+});
