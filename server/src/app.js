@@ -1,10 +1,13 @@
 import express from 'express';
 import cors from 'cors';
-import Database from 'better-sqlite3';
+import { DatabaseSync } from 'node:sqlite';
 
-const db = new Database('database.db');
 
-db.pragma('foreign_keys = ON');
+const db = new DatabaseSync('database.db');
+
+db.exec('PRAGMA foreign_keys = ON;');
+
+// queries
 
 const query = `
   CREATE TABLE IF NOT EXISTS records (
@@ -287,5 +290,5 @@ app.delete('/api/users/:id', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server listening`);
+  console.log(`Server listening on port ${PORT}`);
 });
